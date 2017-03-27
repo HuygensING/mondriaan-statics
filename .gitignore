@@ -1,0 +1,7 @@
+node_modules
+__input__
+__output__
+npm-debug.log
+.idea
+mondriaan-statics.iml
+config.json
