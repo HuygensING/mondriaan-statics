@@ -1,6 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
+import Lb from './tags/lb';
 import {xmlFiles, inputDir, outputDir} from "../constants";
 
 export default async () => {
@@ -11,6 +12,9 @@ export default async () => {
 			componentsPath: 'client/components/entry-tags',
 			jsx: true,
 			startFromTag: 'body',
+			tags: {
+				lb: Lb,
+			}
 		});
 		const outputPath = xmlPath
 			.replace(inputDir, outputDir)
