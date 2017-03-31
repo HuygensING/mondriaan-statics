@@ -54,10 +54,11 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         console.log('[ERROR] No SVN credentials found. Care to share?'.red);
         config = yield askSvnCreds();
     }
+    fs.emptyDirSync(constants_1.inputDir);
     const files = constants_1.xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
-    fs.emptyDirSync(`${constants_1.inputDir}`);
     yield Promise.all(files.map(exportXmlFile(config)))
         .catch((e) => {
+        fs.removeSync(constants_1.inputDir);
         console.log(e.red);
         process.exit();
     });

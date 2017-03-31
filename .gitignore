@@ -1,6 +1,6 @@
 node_modules
-__input__
-__output__
+__xml__
+__entries__
 npm-debug.log
 .idea
 mondrian-entries.iml

@@ -14,13 +14,15 @@ const generate_jsx_1 = require("./generate-jsx");
 const constants_1 = require("./constants");
 const colors = require('colors');
 const development = process.env.NODE_ENV === 'development';
-fs.emptyDirSync(constants_1.outputDir);
 const main = () => __awaiter(this, void 0, void 0, function* () {
-    if (!development)
+    if (!development || !fs.existsSync(constants_1.inputDir))
         yield fetch_1.default();
+    fs.emptyDirSync(constants_1.outputDir);
     process.stdout.write('* Generate JSX from XML. '.cyan);
     yield generate_jsx_1.default();
     console.log('Done.'.green);
+    if (!development)
+        fs.removeSync(constants_1.inputDir);
     console.log('\nA L L   D O N E ! ! !\n'.rainbow.bold);
 });
 main();

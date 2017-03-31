@@ -57,10 +57,13 @@ export default async () => {
 		config = await askSvnCreds();
 	}
 
+	// Make sure the inputDir exists
+	fs.emptyDirSync(inputDir);
 	const files = xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
-	fs.emptyDirSync(`${inputDir}`);
 	await Promise.all(files.map(exportXmlFile(config)))
 		.catch((e) => {
+			// Remove the inputDir, because transfer has errored
+			fs.removeSync(inputDir);
 			console.log(e.red);
 			process.exit();
 		});
