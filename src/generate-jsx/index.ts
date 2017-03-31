@@ -9,7 +9,7 @@ export default async () => {
 	for (const xmlPath of xmlPaths) {
 		const xml: string = fs.readFileSync(xmlPath, 'utf8');
 		const tsx: string = await xml2html(xml, {
-			componentsPath: 'client/components/entry-tags',
+			componentsPath: 'src/components/entry/tags',
 			jsx: true,
 			startFromTag: 'body',
 			tags: {

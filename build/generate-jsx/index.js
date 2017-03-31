@@ -18,7 +18,7 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
     for (const xmlPath of xmlPaths) {
         const xml = fs.readFileSync(xmlPath, 'utf8');
         const tsx = yield hi_xml2html_1.default(xml, {
-            componentsPath: 'client/components/entry-tags',
+            componentsPath: 'src/components/entry/tags',
             jsx: true,
             startFromTag: 'body',
             tags: {

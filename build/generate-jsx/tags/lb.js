@@ -8,10 +8,10 @@ class Lb extends hi_xml2html_1.BaseTag {
         if (!state.hasOwnProperty('linenumber'))
             state.linenumber = 0;
         state.linenumber = state.linenumber + 1;
-        state.usedTags.add('Linenumber');
+        state.usedTags.add('No');
     }
     openAfter() {
-        return `<Linenumber>${this.state.linenumber}</Linenumber>`;
+        return `<No>${this.state.linenumber}</No>`;
     }
 }
 exports.default = Lb;

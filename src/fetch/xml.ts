@@ -5,26 +5,64 @@
 import { exec } from 'child_process';
 import * as fs from 'fs-extra';
 import { xmlFiles, inputDir } from '../constants';
+import * as readline from 'readline';
 
-const { svnUser, svnServer, svnPath } = fs.readJsonSync('./config.json');
+const askSvnCreds = async () => {
+	const question = (q) => new Promise<string>((resolve, reject) => {
+		const rl = readline.createInterface({
+			input: process.stdin,
+			output: process.stdout,
+		});
 
-const files = xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
+		rl.question(q, (answer) => {
+			resolve(answer);
+			rl.close();
+		});
+	});
 
-const exportXmlFile = (svnFilePath) => new Promise((resolve, reject) => {
-	const xmlOutputPath = `${inputDir}/xml`;
-	const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlOutputPath}`;
-	exec(command, (error, stdout, stderr) => {
-		if (error) {
-			console.log(error);
-			return reject();
-		}
+	const svnUser = await question('SVN username? ');
+	const svnServer = await question('SVN server? ');
+	const svnPath = await question('SVN path? ');
+	const doubleCheck = await question(`Does this look correct? svn+ssh://${svnUser}@${svnServer}${svnPath} `);
 
-		fs.removeSync(`${xmlOutputPath}/.svn`);
-		resolve();
-	})
-});
+	if (doubleCheck !== '' && doubleCheck.slice(0, 1).toLowerCase() !== 'y') {
+		console.log('Please try again...'.red);
+		process.exit(0);
+	}
+
+	return { svnUser, svnServer, svnPath };
+};
+
+const exportXmlFile = (config) => (svnFilePath) =>
+	new Promise((resolve, reject) => {
+		const xmlOutputPath = `${inputDir}/xml`;
+		const { svnUser, svnServer, svnPath } = config;
+		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlOutputPath}`;
+		exec(command, (error, stdout, stderr) => {
+			if (error) {
+				return reject(stderr);
+			}
+
+			fs.removeSync(`${xmlOutputPath}/.svn`);
+			resolve();
+		})
+	});
 
 export default async () => {
+	let config;
+	try {
+		config = fs.readJsonSync(`${process.cwd()}/config1.json`);
+	} catch(e) {
+		console.log();
+		console.log('[ERROR] No SVN credentials found. Care to share?'.red);
+		config = await askSvnCreds();
+	}
+
+	const files = xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
 	fs.emptyDirSync(`${inputDir}/xml`);
-	await Promise.all(files.map(exportXmlFile));
+	await Promise.all(files.map(exportXmlFile(config)))
+		.catch((e) => {
+			console.log(e.red);
+			process.exit();
+		});
 }
