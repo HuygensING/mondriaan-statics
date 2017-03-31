@@ -5,11 +5,11 @@ import Lb from './tags/lb';
 import {xmlFiles, inputDir, outputDir} from "../constants";
 
 export default async () => {
-	const xmlPaths = xmlFiles.map((f) => `${inputDir}/xml/${f}`);
+	const xmlPaths = xmlFiles.map((f) => `${inputDir}/${f}`);
 	for (const xmlPath of xmlPaths) {
 		const xml: string = fs.readFileSync(xmlPath, 'utf8');
 		const tsx: string = await xml2html(xml, {
-			componentsPath: 'src/components/entry/tags',
+			componentsPath: 'mondrian-components',
 			jsx: true,
 			startFromTag: 'body',
 			tags: {

@@ -34,21 +34,20 @@ const askSvnCreds = () => __awaiter(this, void 0, void 0, function* () {
     return { svnUser, svnServer, svnPath };
 });
 const exportXmlFile = (config) => (svnFilePath) => new Promise((resolve, reject) => {
-    const xmlOutputPath = `${constants_1.inputDir}/xml`;
     const { svnUser, svnServer, svnPath } = config;
-    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlOutputPath}`;
+    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${constants_1.inputDir}`;
     child_process_1.exec(command, (error, stdout, stderr) => {
         if (error) {
             return reject(stderr);
         }
-        fs.removeSync(`${xmlOutputPath}/.svn`);
+        fs.removeSync(`${constants_1.inputDir}/.svn`);
         resolve();
     });
 });
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
     let config;
     try {
-        config = fs.readJsonSync(`${process.cwd()}/config1.json`);
+        config = fs.readJsonSync(`${process.cwd()}/config.json`);
     }
     catch (e) {
         console.log();
@@ -56,7 +55,7 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         config = yield askSvnCreds();
     }
     const files = constants_1.xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
-    fs.emptyDirSync(`${constants_1.inputDir}/xml`);
+    fs.emptyDirSync(`${constants_1.inputDir}`);
     yield Promise.all(files.map(exportXmlFile(config)))
         .catch((e) => {
         console.log(e.red);

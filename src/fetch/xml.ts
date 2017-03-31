@@ -35,15 +35,14 @@ const askSvnCreds = async () => {
 
 const exportXmlFile = (config) => (svnFilePath) =>
 	new Promise((resolve, reject) => {
-		const xmlOutputPath = `${inputDir}/xml`;
 		const { svnUser, svnServer, svnPath } = config;
-		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlOutputPath}`;
+		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${inputDir}`;
 		exec(command, (error, stdout, stderr) => {
 			if (error) {
 				return reject(stderr);
 			}
 
-			fs.removeSync(`${xmlOutputPath}/.svn`);
+			fs.removeSync(`${inputDir}/.svn`);
 			resolve();
 		})
 	});
@@ -51,7 +50,7 @@ const exportXmlFile = (config) => (svnFilePath) =>
 export default async () => {
 	let config;
 	try {
-		config = fs.readJsonSync(`${process.cwd()}/config1.json`);
+		config = fs.readJsonSync(`${process.cwd()}/config.json`);
 	} catch(e) {
 		console.log();
 		console.log('[ERROR] No SVN credentials found. Care to share?'.red);
@@ -59,7 +58,7 @@ export default async () => {
 	}
 
 	const files = xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
-	fs.emptyDirSync(`${inputDir}/xml`);
+	fs.emptyDirSync(`${inputDir}`);
 	await Promise.all(files.map(exportXmlFile(config)))
 		.catch((e) => {
 			console.log(e.red);
