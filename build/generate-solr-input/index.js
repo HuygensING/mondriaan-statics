@@ -11,35 +11,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const path = require("path");
 const hi_xml2html_1 = require("hi-xml2html");
-const lb_1 = require("./tags/lb");
 const constants_1 = require("../constants");
-const postProcess = (state) => {
-    const tags = [...state.usedTags].join(', ');
-    return (`import * as React from 'react';
-import { ${tags} } from '${state.componentsPath}';
-
-export default () => (
-	<div className="wrapper">
-		${state.output}
-	</div>
-);`);
+const lb_1 = require("./tags/lb");
+const postProcess = (xmlPath, state) => {
+    const body = state.output
+        .replace(/"/g, '\"')
+        .replace(/\s\s+/g, ' ');
+    return {
+        'body_s': body,
+        id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-'),
+    };
 };
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
     const xmlPaths = constants_1.xmlFiles.map((f) => `${constants_1.inputDir}/${f}`);
+    const list = [];
     for (const xmlPath of xmlPaths) {
         const xml = fs.readFileSync(xmlPath, 'utf8');
-        const jsxState = yield hi_xml2html_1.default(xml, {
-            tagClass: 'jsx',
-            componentsPath: 'mondrian-components',
+        const emptyState = yield hi_xml2html_1.default(xml, {
             startFromTag: 'body',
-            tags: {
-                lb: lb_1.default,
-            }
+            tagClass: 'empty',
+            tags: { lb: lb_1.default },
+            tagsToSkip: ['c'],
         });
-        const outputPath = xmlPath
-            .replace(constants_1.inputDir, constants_1.outputDir)
-            .replace('.xml', '.tsx');
-        fs.ensureDirSync(path.dirname(outputPath));
-        fs.writeFileSync(outputPath, postProcess(jsxState), 'utf8');
+        list.push(postProcess(xmlPath, emptyState));
     }
+    const outputPath = `${process.cwd()}/__solr__/input.json`;
+    fs.ensureDirSync(path.dirname(outputPath));
+    fs.writeJsonSync(outputPath, list);
 });

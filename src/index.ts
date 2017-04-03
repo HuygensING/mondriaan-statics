@@ -1,6 +1,7 @@
 import * as fs from 'fs-extra';
 import fetch from './fetch';
 import generateJsx from './generate-jsx';
+import generateSolrInput from './generate-solr-input';
 import {inputDir, outputDir} from './constants';
 const colors = require('colors');
 
@@ -17,6 +18,10 @@ const main = async () => {
 
 	process.stdout.write('* Generate JSX from XML. '.cyan);
 	await generateJsx();
+	console.log('Done.'.green);
+
+	process.stdout.write('* Generate Solr input from XML. '.cyan);
+	await generateSolrInput();
 	console.log('Done.'.green);
 
 	// Remove the inputDir if not developing

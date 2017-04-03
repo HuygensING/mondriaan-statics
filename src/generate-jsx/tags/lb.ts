@@ -1,11 +1,11 @@
-import { BaseTag } from 'hi-xml2html';
+import { JsxTag } from 'hi-xml2html';
 
 const falsifyIsSelfClosing = (data) => ({
 	...data,
 	...{ isSelfClosing: false },
 });
 
-export default class Lb extends BaseTag {
+export default class Lb extends JsxTag {
 	constructor(data, state) {
 		super(falsifyIsSelfClosing(data), state);
 		if (!state.hasOwnProperty('linenumber')) state.linenumber = 0;

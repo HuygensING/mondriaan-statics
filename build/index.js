@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const fetch_1 = require("./fetch");
 const generate_jsx_1 = require("./generate-jsx");
+const generate_solr_input_1 = require("./generate-solr-input");
 const constants_1 = require("./constants");
 const colors = require('colors');
 const development = process.env.NODE_ENV === 'development';
@@ -20,6 +21,9 @@ const main = () => __awaiter(this, void 0, void 0, function* () {
     fs.emptyDirSync(constants_1.outputDir);
     process.stdout.write('* Generate JSX from XML. '.cyan);
     yield generate_jsx_1.default();
+    console.log('Done.'.green);
+    process.stdout.write('* Generate Solr input from XML. '.cyan);
+    yield generate_solr_input_1.default();
     console.log('Done.'.green);
     if (!development)
         fs.removeSync(constants_1.inputDir);
