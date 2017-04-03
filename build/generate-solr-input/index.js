@@ -18,7 +18,7 @@ const postProcess = (xmlPath, state) => {
         .replace(/"/g, '\"')
         .replace(/\s\s+/g, ' ');
     return {
-        'body_s': body,
+        'body_t': body,
         id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-'),
     };
 };

@@ -1,6 +1,7 @@
 node_modules
 __xml__
 __entries__
+__solr__
 npm-debug.log
 .idea
 mondrian-entries.iml
