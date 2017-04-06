@@ -5,20 +5,22 @@ import {xmlFiles, inputDir} from "../constants";
 import Lb from "./tags/lb";
 
 
-const postProcess = (xmlPath, state) => {
-	const body = state.output
+const postProcess = (xmlPath, state) =>
+	state.output
 		.replace(/"/g, '\"')
-		.replace(/\s\s+/g, ' ');
-
-	return {
-		'body_t': body,
-		id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-'),
-	};
-};
+		.replace(/\s\s+/g, ' ')
+		.split('{{{br}}}')
+		.map((l, i) => ({
+			entryId_s: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-'),
+			id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-') + '___' + i,
+			lineNumber_i: i,
+			text_t: l,
+		}))
+		.slice(1);
 
 export default async () => {
 	const xmlPaths = xmlFiles.map((f) => `${inputDir}/${f}`);
-	const list = [];
+	let list = [];
 
 	for (const xmlPath of xmlPaths) {
 		const xml: string = fs.readFileSync(xmlPath, 'utf8');
@@ -29,7 +31,7 @@ export default async () => {
 			tagsToSkip: ['c'],
 		});
 
-		list.push(postProcess(xmlPath, emptyState));
+		list = list.concat(postProcess(xmlPath, emptyState));
 	}
 
 	const outputPath = `${process.cwd()}/__solr__/input.json`;

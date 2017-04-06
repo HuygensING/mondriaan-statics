@@ -9,6 +9,3 @@
 * Add sax dep
 
 ### v1.0.1	(2017/3/31 15:6)
-
-
-undefined
