@@ -1,3 +1,3 @@
-export declare const inputDir = "__input__";
-export declare const outputDir = "__output__";
+export declare const inputDir: string;
+export declare const outputDir: string;
 export declare const xmlFiles: string[];

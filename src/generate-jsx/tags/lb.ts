@@ -14,6 +14,6 @@ export default class Lb extends JsxTag {
 	}
 
 	openAfter() {
-		return `<No>${this.state.linenumber}</No>`;
+		return `<No active={props.lineNumber === '${this.state.linenumber}'}>${this.state.linenumber}</No>`;
 	}
 };

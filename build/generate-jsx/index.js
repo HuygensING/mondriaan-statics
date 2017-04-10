@@ -12,17 +12,15 @@ const fs = require("fs-extra");
 const path = require("path");
 const hi_xml2html_1 = require("hi-xml2html");
 const lb_1 = require("./tags/lb");
+const body_1 = require("./tags/body");
 const constants_1 = require("../constants");
 const postProcess = (state) => {
     const tags = [...state.usedTags].join(', ');
-    return (`import * as React from 'react';
-import { ${tags} } from '${state.componentsPath}';
-
-export default () => (
-	<div className="wrapper">
-		${state.output}
-	</div>
-);`);
+    const output = state.output
+        .replace(/\n/g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/> </g, '><');
+    return `import * as React from 'react'; import { ${tags} } from '${state.componentsPath}'; export default (props) => (${output});`;
 };
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
     const xmlPaths = constants_1.xmlFiles.map((f) => `${constants_1.inputDir}/${f}`);
@@ -33,6 +31,7 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
             componentsPath: 'mondrian-components',
             startFromTag: 'body',
             tags: {
+                body: body_1.default,
                 lb: lb_1.default,
             }
         });

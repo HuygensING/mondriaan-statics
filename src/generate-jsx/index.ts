@@ -2,22 +2,17 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
 import Lb from './tags/lb';
+import Body from './tags/body';
 import {xmlFiles, inputDir, outputDir} from "../constants";
 
 const postProcess = (state): string => {
 	const tags = [...state.usedTags].join(', ');
+	const output = state.output
+		.replace(/\n/g, '')
+		.replace(/\s+/g, ' ')
+		.replace(/> </g, '><');
 
-	return (
-// Do not indent!
-		`import * as React from 'react';
-import { ${tags} } from '${state.componentsPath}';
-
-export default () => (
-	<div className="wrapper">
-		${state.output}
-	</div>
-);`
-	);
+	return `import * as React from 'react'; import { ${tags} } from '${state.componentsPath}'; export default (props) => (${output});`;
 };
 
 export default async () => {
@@ -29,6 +24,7 @@ export default async () => {
 			componentsPath: 'mondrian-components',
 			startFromTag: 'body',
 			tags: {
+				body: Body,
 				lb: Lb,
 			}
 		});
