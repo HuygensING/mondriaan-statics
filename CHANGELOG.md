@@ -1,3 +1,9 @@
+### v1.1.1	(2017/4/10 20:59)
+* Pass query to Body/HireHighlighter
+* Remove unnecessary props
+* Add description and repository
+* Flatten Solr input
+
 ### v1.1.0	(2017/4/4 11:20)
 * Solr index as text instead of string
 * Add Solr input file
