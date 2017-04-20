@@ -59,7 +59,7 @@ export default async () => {
 
 	// Make sure the inputDir exists
 	fs.emptyDirSync(inputDir);
-	const files = xmlFiles.map((f) => `TEKSTEN/Writings/${f}`);
+	const files = xmlFiles.map((f) => `editie/geschriften/${f}`);
 	await Promise.all(files.map(exportXmlFile(config)))
 		.catch((e) => {
 			// Remove the inputDir, because transfer has errored

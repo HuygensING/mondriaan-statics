@@ -11,7 +11,7 @@ class Lb extends hi_xml2html_1.JsxTag {
         state.usedTags.add('No');
     }
     openAfter() {
-        return `<No active={props.lineNumber === '${this.state.linenumber}'}>${this.state.linenumber}</No>`;
+        return `<No className="no" active={props.lineNumber === '${this.state.linenumber}'}>${this.state.linenumber}</No>`;
     }
 }
 exports.default = Lb;
