@@ -1,6 +1,6 @@
 {
   "name": "mondrian-entries",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Generate .tsx and Solr input from TEI-XML",
   "repository": "https://github.com/HuygensING/mondrian-entries",
   "main": "bin/index.js",

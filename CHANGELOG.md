@@ -1,3 +1,6 @@
+### v1.1.2	(2017/4/20 9:42)
+* Adjust to using mark.js in mondrian-components
+
 ### v1.1.1	(2017/4/10 20:59)
 * Pass query to Body/HireHighlighter
 * Remove unnecessary props
