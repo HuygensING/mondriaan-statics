@@ -1,3 +1,6 @@
+### v1.1.3	(2017/4/20 10:2)
+* Bump hi-xml2html"
+
 ### v1.1.2	(2017/4/20 9:42)
 * Adjust to using mark.js in mondrian-components
 
