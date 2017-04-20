@@ -1,6 +1,8 @@
+const colors = require('colors');
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
+import * as MondrianComponents from 'mondrian-components';
 import Lb from './tags/lb';
 import Body from './tags/body';
 import {xmlFiles, inputDir, outputDir} from "../constants";
@@ -16,6 +18,7 @@ const postProcess = (state): string => {
 };
 
 export default async () => {
+	let usedTags = new Set();
 	const xmlPaths = xmlFiles.map((f) => `${inputDir}/${f}`);
 	for (const xmlPath of xmlPaths) {
 		const xml: string = fs.readFileSync(xmlPath, 'utf8');
@@ -33,5 +36,9 @@ export default async () => {
 			.replace('.xml', '.tsx');
 		fs.ensureDirSync(path.dirname(outputPath));
 		fs.writeFileSync(outputPath, postProcess(jsxState), 'utf8')
+		usedTags = new Set([...usedTags, ...jsxState.usedTags]);
 	}
+	const definedTags = Object.keys(MondrianComponents);
+	const undefinedTags = [...usedTags].filter((t) => definedTags.indexOf(t) === -1);
+	if (undefinedTags.length) console.log(`\nUndefined tags: ${undefinedTags.join(', ')}`.red)
 }
