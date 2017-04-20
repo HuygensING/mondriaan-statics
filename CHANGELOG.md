@@ -1,3 +1,6 @@
+### v1.1.4	(2017/4/20 14:7)
+* Log undefined tags
+
 ### v1.1.3	(2017/4/20 10:2)
 * Bump hi-xml2html"
 
