@@ -8,12 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const colors = require('colors');
 const fs = require("fs-extra");
 const path = require("path");
 const hi_xml2html_1 = require("hi-xml2html");
+const MondrianComponents = require("mondrian-components");
+const lb_1 = require("./tags/lb");
 const body_1 = require("./tags/body");
 const notes_1 = require("./tags/notes");
-const lb_1 = require("./tags/lb");
 const constants_1 = require("../constants");
 const postProcess = (state) => {
     const tags = [...state.usedTags].join(', ');
@@ -24,6 +26,7 @@ const postProcess = (state) => {
     return `import * as React from 'react'; import { ${tags} } from '${state.componentsPath}'; export default (props) => (${output});`;
 };
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
+    let usedTags = new Set();
     const xmlPaths = constants_1.xmlFiles.map((f) => `${constants_1.inputDir}/${f}`);
     for (const xmlPath of xmlPaths) {
         const xml = fs.readFileSync(xmlPath, 'utf8');
@@ -48,5 +51,10 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
             .replace('.xml', '.tsx');
         fs.ensureDirSync(path.dirname(outputPath));
         fs.writeFileSync(outputPath, postProcess(jsxState), 'utf8');
+        usedTags = new Set([...usedTags, ...jsxState.usedTags]);
     }
+    const definedTags = Object.keys(MondrianComponents);
+    const undefinedTags = [...usedTags].filter((t) => definedTags.indexOf(t) === -1);
+    if (undefinedTags.length)
+        console.log(`\nUndefined tags: ${undefinedTags.join(', ')}`.red);
 });

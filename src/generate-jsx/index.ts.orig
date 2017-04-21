@@ -2,10 +2,14 @@ const colors = require('colors');
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
+<<<<<<< HEAD
+=======
 import * as MondrianComponents from 'mondrian-components';
 import Lb from './tags/lb';
+>>>>>>> 232a992a8205f9438b6884d8ec639622e0cd461e
 import Body from './tags/body';
 import Notes from './tags/notes';
+import Lb from './tags/lb';
 import {xmlFiles, inputDir, outputDir} from "../constants";
 import {Tag} from "../../../hi-xml2html/node_modules/@types/sax";
 

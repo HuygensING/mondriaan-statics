@@ -19,8 +19,13 @@
     "fs-extra": "^0.30.0",
     "glob": "^7.1.1",
     "hi-xml2html": "^1.2.1",
+<<<<<<< HEAD
+    "sax": "^1.2.2",
+    "xml2js": "^0.4.17"
+=======
     "mondrian-components": "^1.2.3",
     "sax": "^1.2.2"
+>>>>>>> 232a992a8205f9438b6884d8ec639622e0cd461e
   },
   "devDependencies": {
     "@types/colors": "^1.1.1",
