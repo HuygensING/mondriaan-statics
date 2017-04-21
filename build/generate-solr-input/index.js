@@ -30,7 +30,10 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         const emptyState = yield hi_xml2html_1.default(xml, {
             startFromTag: 'body',
             tagClass: 'empty',
-            tags: { lb: lb_1.default },
+            getComponent: (node) => {
+                if (node.name === 'lb')
+                    return lb_1.default;
+            },
             tagsToSkip: ['c'],
         });
         list = list.concat(postProcess(xmlPath, emptyState));

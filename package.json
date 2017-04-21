@@ -19,7 +19,8 @@
     "fs-extra": "^0.30.0",
     "glob": "^7.1.1",
     "hi-xml2html": "^1.2.1",
-    "sax": "^1.2.2"
+    "sax": "^1.2.2",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "@types/colors": "^1.1.1",

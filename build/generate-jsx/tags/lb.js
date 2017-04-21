@@ -5,13 +5,13 @@ const falsifyIsSelfClosing = (data) => (Object.assign({}, data, { isSelfClosing:
 class Lb extends hi_xml2html_1.JsxTag {
     constructor(data, state) {
         super(falsifyIsSelfClosing(data), state);
-        if (!state.hasOwnProperty('linenumber'))
-            state.linenumber = 0;
-        state.linenumber = state.linenumber + 1;
+        if (!state.custom.hasOwnProperty('linenumber'))
+            state.custom.linenumber = 0;
+        state.custom.linenumber = state.linenumber + 1;
         state.usedTags.add('No');
     }
     openAfter() {
-        return `<No className="no" active={props.lineNumber === '${this.state.linenumber}'}>${this.state.linenumber}</No>`;
+        return `<No className="no" active={props.lineNumber === '${this.state.custom.linenumber}'}>${this.state.custom.linenumber}</No>`;
     }
 }
 exports.default = Lb;

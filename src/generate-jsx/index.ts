@@ -1,9 +1,11 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
-import Lb from './tags/lb';
 import Body from './tags/body';
+import Notes from './tags/notes';
+import Lb from './tags/lb';
 import {xmlFiles, inputDir, outputDir} from "../constants";
+import {Tag} from "../../../hi-xml2html/node_modules/@types/sax";
 
 const postProcess = (state): string => {
 	const tags = [...state.usedTags].join(', ');
@@ -23,9 +25,21 @@ export default async () => {
 			tagClass: 'jsx',
 			componentsPath: 'mondrian-components',
 			startFromTag: 'body',
-			tags: {
-				body: Body,
-				lb: Lb,
+			getComponent: (node: Tag) => {
+				if (
+					node.name === 'div' &&
+					(
+						node.attributes.type === 'origNotes' ||
+						node.attributes.type === 'edsNotes'
+					)
+				) return Notes;
+
+				const compByNodeName = {
+					body: Body,
+					lb: Lb,
+				};
+
+				return compByNodeName[node.name];
 			}
 		});
 		const outputPath = xmlPath

@@ -25,7 +25,9 @@ export default async () => {
 		const emptyState = await xml2html(xml, {
 			startFromTag: 'body',
 			tagClass: 'empty',
-			tags: { lb: Lb },
+			getComponent: (node) => {
+				if (node.name === 'lb') return Lb;
+			},
 			tagsToSkip: ['c'],
 		});
 

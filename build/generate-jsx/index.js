@@ -11,8 +11,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs-extra");
 const path = require("path");
 const hi_xml2html_1 = require("hi-xml2html");
-const lb_1 = require("./tags/lb");
 const body_1 = require("./tags/body");
+const notes_1 = require("./tags/notes");
+const lb_1 = require("./tags/lb");
 const constants_1 = require("../constants");
 const postProcess = (state) => {
     const tags = [...state.usedTags].join(', ');
@@ -30,9 +31,16 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
             tagClass: 'jsx',
             componentsPath: 'mondrian-components',
             startFromTag: 'body',
-            tags: {
-                body: body_1.default,
-                lb: lb_1.default,
+            getComponent: (node) => {
+                if (node.name === 'div' &&
+                    (node.attributes.type === 'origNotes' ||
+                        node.attributes.type === 'edsNotes'))
+                    return notes_1.default;
+                const compByNodeName = {
+                    body: body_1.default,
+                    lb: lb_1.default,
+                };
+                return compByNodeName[node.name];
             }
         });
         const outputPath = xmlPath
