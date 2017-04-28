@@ -1,0 +1,1 @@
+import * as React from 'react'; import { FacsThumb, No } from 'mondrian-components'; export default (props) => (null);

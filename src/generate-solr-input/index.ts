@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
-import {xmlFiles, inputDir} from "../constants";
+import {xmlFiles, xmlDir} from "../constants";
 import Lb from "./tags/lb";
 
 
@@ -17,18 +17,20 @@ const postProcess = (xmlPath, state) =>
 		.slice(1);
 
 export default async () => {
-	const xmlPaths = xmlFiles.map((f) => `${inputDir}/${f}`);
+	const xmlPaths = xmlFiles.map((f) => `${xmlDir}/${f}`);
 	let list = [];
 
 	for (const xmlPath of xmlPaths) {
 		const xml: string = fs.readFileSync(xmlPath, 'utf8');
 		const emptyState = await xml2html(xml, {
-			startFromTag: 'body',
-			tagClass: 'empty',
+			parent: {
+				name: 'body',
+			},
+			outputType: 'empty',
 			getComponent: (node) => {
 				if (node.name === 'lb') return Lb;
 			},
-			tagsToSkip: ['c'],
+			ignore: [{ name: 'c' }],
 		});
 
 		list = list.concat(postProcess(xmlPath, emptyState));

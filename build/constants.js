@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.inputDir = `${process.cwd()}/__xml__`;
-exports.outputDir = `${process.cwd()}/__entries__`;
+exports.xmlDir = `${process.cwd()}/__xml__`;
+exports.entriesDir = `${process.cwd()}/__entries__`;
+exports.edsNotesDir = `${process.cwd()}/__notes__/eds`;
+exports.origNotesDir = `${process.cwd()}/__notes__/orig`;
 exports.xmlFiles = [
     '1917_NieuweBeeldingInSchilderkunst_STIJL.xml',
     '1918_BepaaldeEnOnbepaalde_STIJL.xml',

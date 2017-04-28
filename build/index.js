@@ -16,9 +16,9 @@ const constants_1 = require("./constants");
 const colors = require('colors');
 const development = process.env.NODE_ENV === 'development';
 const main = () => __awaiter(this, void 0, void 0, function* () {
-    if (!development || !fs.existsSync(constants_1.inputDir))
+    if (!development || !fs.existsSync(constants_1.xmlDir))
         yield fetch_1.default();
-    fs.emptyDirSync(constants_1.outputDir);
+    fs.emptyDirSync(constants_1.entriesDir);
     process.stdout.write('* Generate JSX from XML. '.cyan);
     yield generate_jsx_1.default();
     console.log('Done.'.green);
@@ -26,7 +26,7 @@ const main = () => __awaiter(this, void 0, void 0, function* () {
     yield generate_solr_input_1.default();
     console.log('Done.'.green);
     if (!development)
-        fs.removeSync(constants_1.inputDir);
+        fs.removeSync(constants_1.xmlDir);
     console.log('\nA L L   D O N E ! ! !\n'.rainbow.bold);
 });
 main();

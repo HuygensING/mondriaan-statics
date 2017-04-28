@@ -4,7 +4,7 @@
  */
 import { exec } from 'child_process';
 import * as fs from 'fs-extra';
-import { xmlFiles, inputDir } from '../constants';
+import { xmlFiles, xmlDir } from '../constants';
 import * as readline from 'readline';
 
 const askSvnCreds = async () => {
@@ -36,13 +36,13 @@ const askSvnCreds = async () => {
 const exportXmlFile = (config) => (svnFilePath) =>
 	new Promise((resolve, reject) => {
 		const { svnUser, svnServer, svnPath } = config;
-		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${inputDir}`;
+		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlDir}`;
 		exec(command, (error, stdout, stderr) => {
 			if (error) {
 				return reject(stderr);
 			}
 
-			fs.removeSync(`${inputDir}/.svn`);
+			fs.removeSync(`${xmlDir}/.svn`);
 			resolve();
 		})
 	});
@@ -57,13 +57,13 @@ export default async () => {
 		config = await askSvnCreds();
 	}
 
-	// Make sure the inputDir exists
-	fs.emptyDirSync(inputDir);
+	// Make sure the xmlDir exists
+	fs.emptyDirSync(xmlDir);
 	const files = xmlFiles.map((f) => `editie/geschriften/${f}`);
 	await Promise.all(files.map(exportXmlFile(config)))
 		.catch((e) => {
-			// Remove the inputDir, because transfer has errored
-			fs.removeSync(inputDir);
+			// Remove the xmlDir, because transfer has errored
+			fs.removeSync(xmlDir);
 			console.log(e.red);
 			process.exit();
 		});

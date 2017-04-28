@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const hi_xml2html_1 = require("hi-xml2html");
-const falsifyIsSelfClosing = (data) => (Object.assign({}, data, { isSelfClosing: false }));
+exports.falsifyIsSelfClosing = (data) => (Object.assign({}, data, { isSelfClosing: false }));
 class Lb extends hi_xml2html_1.JsxTag {
     constructor(data, state) {
-        super(falsifyIsSelfClosing(data), state);
+        super(exports.falsifyIsSelfClosing(data), state);
         if (!state.custom.hasOwnProperty('linenumber'))
             state.custom.linenumber = 0;
-        state.custom.linenumber = state.linenumber + 1;
+        state.custom.linenumber = state.custom.linenumber + 1;
         state.usedTags.add('No');
     }
     openAfter() {

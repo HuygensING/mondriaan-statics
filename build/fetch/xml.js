@@ -35,12 +35,12 @@ const askSvnCreds = () => __awaiter(this, void 0, void 0, function* () {
 });
 const exportXmlFile = (config) => (svnFilePath) => new Promise((resolve, reject) => {
     const { svnUser, svnServer, svnPath } = config;
-    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${constants_1.inputDir}`;
+    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${constants_1.xmlDir}`;
     child_process_1.exec(command, (error, stdout, stderr) => {
         if (error) {
             return reject(stderr);
         }
-        fs.removeSync(`${constants_1.inputDir}/.svn`);
+        fs.removeSync(`${constants_1.xmlDir}/.svn`);
         resolve();
     });
 });
@@ -54,11 +54,11 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         console.log('[ERROR] No SVN credentials found. Care to share?'.red);
         config = yield askSvnCreds();
     }
-    fs.emptyDirSync(constants_1.inputDir);
+    fs.emptyDirSync(constants_1.xmlDir);
     const files = constants_1.xmlFiles.map((f) => `editie/geschriften/${f}`);
     yield Promise.all(files.map(exportXmlFile(config)))
         .catch((e) => {
-        fs.removeSync(constants_1.inputDir);
+        fs.removeSync(constants_1.xmlDir);
         console.log(e.red);
         process.exit();
     });

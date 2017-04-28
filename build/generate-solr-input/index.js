@@ -23,18 +23,20 @@ const postProcess = (xmlPath, state) => state.output
 }))
     .slice(1);
 exports.default = () => __awaiter(this, void 0, void 0, function* () {
-    const xmlPaths = constants_1.xmlFiles.map((f) => `${constants_1.inputDir}/${f}`);
+    const xmlPaths = constants_1.xmlFiles.map((f) => `${constants_1.xmlDir}/${f}`);
     let list = [];
     for (const xmlPath of xmlPaths) {
         const xml = fs.readFileSync(xmlPath, 'utf8');
         const emptyState = yield hi_xml2html_1.default(xml, {
-            startFromTag: 'body',
-            tagClass: 'empty',
+            parent: {
+                name: 'body',
+            },
+            outputType: 'empty',
             getComponent: (node) => {
                 if (node.name === 'lb')
                     return lb_1.default;
             },
-            tagsToSkip: ['c'],
+            ignore: [{ name: 'c' }],
         });
         list = list.concat(postProcess(xmlPath, emptyState));
     }
