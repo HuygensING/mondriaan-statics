@@ -1,3 +1,8 @@
+### v1.2.0	(2017/4/28 16:51)
+* Refactor and add notes
+* Merge
+* Use getComponent func instead of tags map to increase flexibility when passing external components
+
 ### v1.1.4	(2017/4/20 14:7)
 * Log undefined tags
 
