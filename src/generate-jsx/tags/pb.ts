@@ -13,7 +13,7 @@ export default class Pb extends JsxTag {
 		if (facs != null) facs = facs.slice(1);
 
 		return facsimiles != null && facsimiles.hasOwnProperty(facs) ?
-			`<FacsThumb activateFacsimile={props.activateFacsimile} url="${facsimiles[facs]}" />` :
+			`<FacsThumb activateFacsimile={props.activateFacsimile} activeNote={props.activeNote} url="${facsimiles[facs]}" />` :
 			'';
 	}
 };
