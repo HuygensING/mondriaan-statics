@@ -22,15 +22,18 @@ export default async () => {
 
 	// Parse text (writes a tsx file per entry)
 	const usedTagsInText = await handleXml(xmlData, entriesDir, {
-		ignore: [{
-			attribute: 'type',
-			name: 'div',
-			value: 'edsNotes',
-		}, {
-			attribute: 'type',
-			name: 'div',
-			value: 'origNotes',
-		}],
+		ignore: [
+			// {
+			// 	attribute: 'type',
+			// 	name: 'div',
+			// 	value: 'edsNotes',
+			// },
+			{
+				attribute: 'type',
+				name: 'div',
+				value: 'origNotes',
+			}
+		],
 		state: {
 			facsimiles,
 		}

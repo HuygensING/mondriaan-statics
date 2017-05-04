@@ -22,15 +22,13 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
     }));
     const facsimiles = yield extract_facsimiles_1.default(xmlData);
     const usedTagsInText = yield handle_xml_1.default(xmlData, constants_1.entriesDir, {
-        ignore: [{
-                attribute: 'type',
-                name: 'div',
-                value: 'edsNotes',
-            }, {
+        ignore: [
+            {
                 attribute: 'type',
                 name: 'div',
                 value: 'origNotes',
-            }],
+            }
+        ],
         state: {
             facsimiles,
         }
