@@ -1,3 +1,9 @@
+### v1.2.1	(2017/5/4 15:44)
+* Fix entry IDs
+* Changes for moving annotations in FE
+* Add facs thumb
+* Bump mondrian-components
+
 ### v1.2.0	(2017/4/28 16:51)
 * Refactor and add notes
 * Merge
