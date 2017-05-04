@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import xml2html from 'hi-xml2html';
-import {xmlFiles, xmlDir} from "../constants";
+import {xmlFiles, xmlDir, idByFilename} from "../constants";
 import Lb from "./tags/lb";
 
 
@@ -11,7 +11,7 @@ const postProcess = (xmlPath, state) =>
 		.replace(/\s\s+/g, ' ')
 		.split('{{{br}}}')
 		.map((l, i) => ({
-			id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-') + '___' + i,
+			id: idByFilename[path.basename(xmlPath)] + '___' + i,
 			line_t: l,
 		}))
 		.slice(1);

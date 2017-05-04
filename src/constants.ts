@@ -8,3 +8,10 @@ export const xmlFiles = [
 	'Schetsboek-1.xml',
 	'Schetsboek-2.xml',
 ];
+
+export const idByFilename = {
+	'1917_NieuweBeeldingInSchilderkunst_STIJL.xml': 'nieuwe-beelding-in-schilderkunst',
+	'1918_BepaaldeEnOnbepaalde_STIJL.xml': 'bepaalde-en-onbepaalde',
+	'Schetsboek-1.xml': 'schetsboek-1',
+	'Schetsboek-2.xml': 'schetsboek-2',
+};

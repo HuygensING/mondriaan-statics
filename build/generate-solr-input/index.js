@@ -18,7 +18,7 @@ const postProcess = (xmlPath, state) => state.output
     .replace(/\s\s+/g, ' ')
     .split('{{{br}}}')
     .map((l, i) => ({
-    id: path.basename(xmlPath, '.xml').toLowerCase().replace(/_/g, '-') + '___' + i,
+    id: constants_1.idByFilename[path.basename(xmlPath)] + '___' + i,
     line_t: l,
 }))
     .slice(1);
