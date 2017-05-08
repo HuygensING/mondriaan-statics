@@ -1,3 +1,6 @@
+### v1.2.2	(2017/5/8 12:44)
+* Bump mondrian-components
+
 ### v1.2.1	(2017/5/4 15:44)
 * Fix entry IDs
 * Changes for moving annotations in FE
