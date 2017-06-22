@@ -35,8 +35,7 @@ const askSvnCreds = () => __awaiter(this, void 0, void 0, function* () {
 });
 const exportXmlFile = (config) => (svnFilePath) => new Promise((resolve, reject) => {
     const { svnUser, svnServer, svnPath } = config;
-    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${constants_1.xmlDir}`;
-    console.log(command, '\n\n');
+    const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} '${constants_1.xmlDir}'`;
     child_process_1.exec(command, (error, stdout, stderr) => {
         if (error) {
             return reject(stderr);
