@@ -37,6 +37,7 @@ const exportXmlFile = (config) => (svnFilePath) =>
 	new Promise((resolve, reject) => {
 		const { svnUser, svnServer, svnPath } = config;
 		const command = `svn export svn+ssh://${svnUser}@${svnServer}${svnPath}${svnFilePath} ${xmlDir}`;
+		console.log(command, '\n\n');
 		exec(command, (error, stdout, stderr) => {
 			if (error) {
 				return reject(stderr);
