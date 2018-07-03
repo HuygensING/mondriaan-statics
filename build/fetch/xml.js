@@ -55,11 +55,9 @@ exports.default = () => __awaiter(this, void 0, void 0, function* () {
         config = yield askSvnCreds();
     }
     fs.emptyDirSync(constants_1.xmlDir);
-    const files = constants_1.xmlFiles.map((f) => `editie/geschriften/${f}`);
-    yield Promise.all(files.map(exportXmlFile(config)))
-        .catch((e) => {
-        fs.removeSync(constants_1.xmlDir);
-        console.log(e.red);
-        process.exit();
-    });
+    const files = constants_1.xmlFiles
+        .map((f) => `editie/geschriften/${f}`);
+    for (const file of files) {
+        yield exportXmlFile(config)(file);
+    }
 });

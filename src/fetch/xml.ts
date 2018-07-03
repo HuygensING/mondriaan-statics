@@ -59,12 +59,19 @@ export default async () => {
 
 	// Make sure the xmlDir exists
 	fs.emptyDirSync(xmlDir);
-	const files = xmlFiles.map((f) => `editie/geschriften/${f}`);
-	await Promise.all(files.map(exportXmlFile(config)))
-		.catch((e) => {
-			// Remove the xmlDir, because transfer has errored
-			fs.removeSync(xmlDir);
-			console.log(e.red);
-			process.exit();
-		});
+	const files = xmlFiles
+		.map((f) => `editie/geschriften/${f}`)
+
+	for (const file of files) {
+		await exportXmlFile(config)(file);
+	}
+
+
+	// await Promise.all(files.map(exportXmlFile(config)))
+	// 	.catch((e) => {
+	// 		// Remove the xmlDir, because transfer has errored
+	// 		fs.removeSync(xmlDir);
+	// 		console.log(e.red);
+	// 		process.exit();
+	// 	});
 }

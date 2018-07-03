@@ -1,6 +1,6 @@
 import xml2html from 'hi-xml2html';
 import * as fs from 'fs-extra';
-import {Tag as SaxTag} from "../../../hi-xml2html/node_modules/@types/sax";
+import {Tag as SaxTag} from "sax";
 import Notes from "./tags/notes";
 import Anchor from "./tags/anchor";
 import Body from "./tags/body";
